@@ -1,7 +1,9 @@
 from unittest import TestCase
 
-from src.equationhandling.equation_variable import CalculatedVariable, AssignedVariable
-from src.equationhandling.equation_variables_collection import VariablesCollection
+from src.equationhandling.equation_variable import CalculatedVariable, \
+    AssignedVariable
+from src.equationhandling.equation_variables_collection import \
+    VariablesCollection
 
 
 class TestVariablesCollection(TestCase):
