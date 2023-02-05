@@ -10,7 +10,9 @@ class Validator(ABC):
 
 class IntegerValidator(Validator):
     def validate(self, value: Any) -> bool:
-        return isinstance(value, int) or (isinstance(value, str) and value.isdigit())
+        return isinstance(value, int) or (
+            isinstance(value, str) and value.isdigit()
+        )
 
 
 class FloatValidator(Validator):

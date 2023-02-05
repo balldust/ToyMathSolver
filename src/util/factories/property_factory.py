@@ -21,4 +21,3 @@ class NonSettablePropertyFactory(PropertyFactory):
 
     def named_property_setter(self, name: str, value: Any) -> bool:
         return False
-

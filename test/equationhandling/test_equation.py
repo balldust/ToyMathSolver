@@ -4,13 +4,15 @@ from parameterized import parameterized
 
 from src.equationhandling.equation import Equation
 from src.equationhandling.equation_variable import CalculatedVariable
-from src.equationhandling.equation_variables_collection import VariablesCollection
+from src.equationhandling.equation_variables_collection import (
+    VariablesCollection,
+)
 
 
 class TestEquation(TestCase):
     simple_equation = ["-", "x1", "1", -0.5]
-    one_variable_and_addition =["-", "+", "x1", "1", "1", 0.5]
-    one_variable_and_subtraction =["-", "-", "x1", "1", "1", -1.5]
+    one_variable_and_addition = ["-", "+", "x1", "1", "1", 0.5]
+    one_variable_and_subtraction = ["-", "-", "x1", "1", "1", -1.5]
     one_variable_and_multiplication = ["-", "*", "x1", "2", "1", 0]
     one_variable_and_division = ["-", "/", "x1", "0.25", "1", 1]
     one_variable_and_power = ["-", "^", "x1", "2", "1", -0.75]
@@ -20,7 +22,7 @@ class TestEquation(TestCase):
         [one_variable_and_subtraction],
         [one_variable_and_multiplication],
         [one_variable_and_division],
-        [one_variable_and_power]
+        [one_variable_and_power],
     ]
 
     @parameterized.expand(params)
@@ -37,7 +39,8 @@ class EquationBuilder:
     def __init__(self, equation_terms):
         self.equation_terms = equation_terms
         self.variables_collection = self._create_variables_collection(
-            equation_terms[:-1])
+            equation_terms[:-1]
+        )
 
     @staticmethod
     def _create_variables_collection(equation_terms):

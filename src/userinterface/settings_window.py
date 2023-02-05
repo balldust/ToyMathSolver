@@ -1,14 +1,20 @@
 import typing
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QTreeView, QLayout, QAbstractItemView
+from PyQt5.QtWidgets import (
+    QWidget,
+    QVBoxLayout,
+    QTreeView,
+    QLayout,
+    QAbstractItemView,
+)
 from PyQt5.QtCore import Qt, QModelIndex
 
 from src.execution.problem_execution import ProblemExecution
 from src.image_utils import image_utils
 from src.util.controllers.settings_view_controller import SettingsViewController
 
-StyleSheet = '''
+StyleSheet = """
 QWidget#Window {
     background-color: black;
 }
@@ -20,7 +26,7 @@ QTreeView {
 }
 
 "
-'''
+"""
 
 
 class SettingsWindow:
@@ -29,7 +35,9 @@ class SettingsWindow:
         self._controller = SettingsViewController(model)
         self._window.setWindowModality(Qt.ApplicationModal)
         layout = self._create_window_layout()
-        window_icon = image_utils.create_qicon_from_filename("settings_button.png")
+        window_icon = image_utils.create_qicon_from_filename(
+            "settings_button.png"
+        )
         self._window.setWindowIcon(window_icon)
         self._window.setLayout(layout)
         self._window.setWindowTitle("Settings")
@@ -62,7 +70,12 @@ class SettingsView:
 
 
 class SettingsViewModel(QtCore.QAbstractItemModel):
-    def __init__(self, view: QAbstractItemView, controller: SettingsViewController, parent=None):
+    def __init__(
+        self,
+        view: QAbstractItemView,
+        controller: SettingsViewController,
+        parent=None,
+    ):
         super(SettingsViewModel, self).__init__(parent)
         self._controller = controller
         self._root = self._controller.get_settings_specifications()
@@ -93,7 +106,9 @@ class SettingsViewModel(QtCore.QAbstractItemModel):
 
         child = parent.child(row)
         if child:
-            return QtCore.QAbstractItemModel.createIndex(self, row, column, child)
+            return QtCore.QAbstractItemModel.createIndex(
+                self, row, column, child
+            )
         else:
             return QtCore.QModelIndex()
 
@@ -101,7 +116,9 @@ class SettingsViewModel(QtCore.QAbstractItemModel):
         if index.isValid():
             p = index.internalPointer().parent
             if p:
-                return QtCore.QAbstractItemModel.createIndex(self, p.row(), 0, p)
+                return QtCore.QAbstractItemModel.createIndex(
+                    self, p.row(), 0, p
+                )
         return QtCore.QModelIndex()
 
     def hasChildren(self, index):
@@ -119,11 +136,17 @@ class SettingsViewModel(QtCore.QAbstractItemModel):
             return index.internalPointer().data(index.column())
         return None
 
-    def setData(self, index: QModelIndex, value: typing.Any, role: int = ...) -> bool:
+    def setData(
+        self, index: QModelIndex, value: typing.Any, role: int = ...
+    ) -> bool:
         return index.internalPointer().set_data(index.column(), value)
 
     def flags(self, index):
         if index.column() == 1:
-            return QtCore.Qt.ItemIsEditable | QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled
+            return (
+                QtCore.Qt.ItemIsEditable
+                | QtCore.Qt.ItemIsSelectable
+                | QtCore.Qt.ItemIsEnabled
+            )
         else:
             return QtCore.Qt.ItemIsSelectable

@@ -1,21 +1,23 @@
-# Code adapted from: https://wiki.python.org/moin/PyQt/Python%20syntax%20highlighting
+# Code adapted from: https://wiki.python.org/moin/PyQt/Python%20syntax
+# %20highlighting
 from PyQt5 import QtCore, QtGui
 
-from src.equationinterpreter.error_handling.syntax_error import EquationSyntaxError
+from src.equationinterpreter.error_handling.syntax_error import (
+    EquationSyntaxError,
+)
 from src.util.listeners.error_listeners import SyntaxErrorListener
 
 
-def create_format(color, style=''):
-    """Return a QTextCharFormat with the given attributes.
-    """
+def create_format(color, style=""):
+    """Return a QTextCharFormat with the given attributes."""
     _color = QtGui.QColor()
     _color.setNamedColor(color)
 
     _format = QtGui.QTextCharFormat()
     _format.setForeground(_color)
-    if 'bold' in style:
+    if "bold" in style:
         _format.setFontWeight(QtGui.QFont.Bold)
-    if 'italic' in style:
+    if "italic" in style:
         _format.setFontItalic(True)
 
     return _format
@@ -23,49 +25,64 @@ def create_format(color, style=''):
 
 # Syntax styles that can be shared by all languages
 STYLES = {
-    'operator': create_format('red'),
-    'brace': create_format('darkGray'),
-    'comment': create_format('darkGreen', 'italic'),
-    'numbers': create_format('magenta'),
+    "operator": create_format("red"),
+    "brace": create_format("darkGray"),
+    "comment": create_format("darkGreen", "italic"),
+    "numbers": create_format("magenta"),
 }
 
 
-class TextHighlighterMeta(type(QtGui.QSyntaxHighlighter), type(SyntaxErrorListener)):
+class TextHighlighterMeta(
+    type(QtGui.QSyntaxHighlighter), type(SyntaxErrorListener)
+):
     pass
 
 
-class TextHighlighter(QtGui.QSyntaxHighlighter, SyntaxErrorListener, metaclass=TextHighlighterMeta):
+class TextHighlighter(
+    QtGui.QSyntaxHighlighter, SyntaxErrorListener, metaclass=TextHighlighterMeta
+):
     operators = [
-        '=', ':=', ';',
+        "=",
+        ":=",
+        ";",
         # Arithmetic
-        '\+', '-', '/', '\^'
+        "\+",
+        "-",
+        "/",
+        "\^",
     ]
 
     def __init__(self, parent: QtGui.QTextDocument) -> None:
         super().__init__(parent)
         self._error_block_numbers = []
         # Multi-line strings (expression, flag, style)
-        self.comment = (QtCore.QRegExp('//'), 1, STYLES['comment'])
+        self.comment = (QtCore.QRegExp("//"), 1, STYLES["comment"])
 
         rules = []
-        rules += [(r'%s' % o, 0, STYLES['operator'])
-                  for o in TextHighlighter.operators]
+        rules += [
+            (r"%s" % o, 0, STYLES["operator"])
+            for o in TextHighlighter.operators
+        ]
 
         # All other rules
         rules += [
             # Numeric literals
-            (r'\b[+-]?[0-9]+[lL]?\b', 0, STYLES['numbers']),
-            (r'\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\b', 0, STYLES['numbers']),
-            (r'\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b', 0, STYLES['numbers'])
+            (r"\b[+-]?[0-9]+[lL]?\b", 0, STYLES["numbers"]),
+            (r"\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\b", 0, STYLES["numbers"]),
+            (
+                r"\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b",
+                0,
+                STYLES["numbers"],
+            ),
         ]
 
         # Build a QRegExp for each pattern
-        self.rules = [(QtCore.QRegExp(pat), index, fmt)
-            for (pat, index, fmt) in rules]
+        self.rules = [
+            (QtCore.QRegExp(pat), index, fmt) for (pat, index, fmt) in rules
+        ]
 
     def highlightBlock(self, text):
-        """Apply syntax highlighting to the given block of text.
-        """
+        """Apply syntax highlighting to the given block of text."""
         if self.currentBlock().blockNumber() in self._error_block_numbers:
             _color = QtGui.QColor()
             _color.setNamedColor("gray")
@@ -75,7 +92,6 @@ class TextHighlighter(QtGui.QSyntaxHighlighter, SyntaxErrorListener, metaclass=T
             self.setFormat(0, len(text), _format)
         else:
             self._format_text(text)
-
 
     def _format_text(self, text):
         for expression, nth, format in self.rules:
@@ -116,7 +132,11 @@ class TextHighlighter(QtGui.QSyntaxHighlighter, SyntaxErrorListener, metaclass=T
             # Ending delimiter on this line?
             if end >= add:
                 base_length = end - start + add
-                length = base_length if base_length > 0 else base_length + delimiter.matchedLength()
+                length = (
+                    base_length
+                    if base_length > 0
+                    else base_length + delimiter.matchedLength()
+                )
                 self.setCurrentBlockState(0)
             # No; multi-line string
             else:

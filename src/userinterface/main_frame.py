@@ -10,7 +10,7 @@ from ..image_utils import image_utils
 from ..userinterface.equation_view import EquationView
 from ..util.controllers.main_view_controller import MainViewController
 
-StyleSheet = '''
+StyleSheet = """
 QWidget#Window {
     background-color: black;
 }
@@ -55,7 +55,7 @@ QPlainTextEdit {
     font-size: 20px
 }
 "
-'''
+"""
 
 
 class MainWindow:
@@ -142,7 +142,7 @@ class MainWindow:
         self._window.setStyleSheet(StyleSheet)
         self._window.setLayout(layout)
         self._window.resize(900, 600)
-        self._window.setWindowTitle('ToyMathSolver')
+        self._window.setWindowTitle("ToyMathSolver")
 
     def set_solve_button_action(self, func: callable):
         self._solve_button.clicked.connect(func)
@@ -155,4 +155,3 @@ class MainWindow:
     def show_window(self):
         self._window.show()
         sys.exit(self._app.exec_())
-

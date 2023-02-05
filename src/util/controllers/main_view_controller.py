@@ -1,5 +1,7 @@
 from src.equationhandling.equation_variable import CalculatedVariable
-from src.equationinterpreter.error_handling.syntax_error import EquationSyntaxError
+from src.equationinterpreter.error_handling.syntax_error import (
+    EquationSyntaxError,
+)
 from src.execution.problem_execution import ProblemExecution
 from src.util.listeners.error_listeners import SyntaxErrorListener
 from src.util.listeners.text_listeners import TextListener
@@ -10,7 +12,9 @@ class MainViewController(TextListener):
     def __init__(self, model: ProblemExecution):
         self._model = model
         self._error_listeners: list[SyntaxErrorListener] = []
-        self._calculated_variable_listeners: list[CalculatedVariableObserver] = []
+        self._calculated_variable_listeners: list[
+            CalculatedVariableObserver
+        ] = []
 
     def handle_text(self, text: str):
         self._model.set_text(text)
@@ -49,5 +53,3 @@ class MainViewController(TextListener):
 
     def set_variable_initial_value(self, var_name: str, value: float):
         self._model.set_variable_initial_value(var_name, value)
-
-

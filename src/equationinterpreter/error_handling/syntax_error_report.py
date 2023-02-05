@@ -1,6 +1,8 @@
 from antlr4.error.ErrorListener import ErrorListener
 
-from src.equationinterpreter.error_handling.syntax_error import EquationSyntaxError
+from src.equationinterpreter.error_handling.syntax_error import (
+    EquationSyntaxError,
+)
 
 
 class SyntaxErrorReporter(ErrorListener):
@@ -8,7 +10,9 @@ class SyntaxErrorReporter(ErrorListener):
         self._errors = []
 
     def syntaxError(self, recognizer, offending_symbol, line, column, msg, e):
-        error = EquationSyntaxError(recognizer, offending_symbol, line, column, msg, e)
+        error = EquationSyntaxError(
+            recognizer, offending_symbol, line, column, msg, e
+        )
         self._errors.append(error)
 
     @property

@@ -1,4 +1,8 @@
-from src.equationhandling.equation_variable import EquationVariable, CalculatedVariable, AssignedVariable
+from src.equationhandling.equation_variable import (
+    EquationVariable,
+    CalculatedVariable,
+    AssignedVariable,
+)
 
 
 class VariablesCollection:
@@ -10,21 +14,26 @@ class VariablesCollection:
             self._remove_calculated_variable_to_replace_with_assigned(var)
             self._variables.add(var)
         else:
-            raise Exception("Illegal operation: Cannot add object that is not an EquationVariable")
+            raise Exception(
+                "Illegal operation: Cannot add object that"
+                + " is not an EquationVariable"
+            )
 
-    def _remove_calculated_variable_to_replace_with_assigned(self, var: EquationVariable):
+    def _remove_calculated_variable_to_replace_with_assigned(
+        self, var: EquationVariable
+    ):
         if isinstance(var, AssignedVariable) and var in self._variables:
             self._variables.remove(var)
 
     def has_variable(self, name: str) -> bool:
         for var in self._variables:
-            if var.name.lower() == name:
+            if var.name.lower() == name.lower():
                 return True
         return False
 
     def get_variable_value(self, name: str) -> float:
         for var in self._variables:
-            if var.name.lower() == name:
+            if var.name.lower() == name.lower():
                 return var.value
 
     def calculated_variables(self) -> list[CalculatedVariable]:
@@ -37,4 +46,3 @@ class VariablesCollection:
     @property
     def variables(self) -> set[EquationVariable]:
         return self._variables
-

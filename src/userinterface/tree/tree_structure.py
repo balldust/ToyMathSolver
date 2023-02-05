@@ -21,7 +21,9 @@ class TreeItem:
 
     def set_value(self, new_value: Any) -> bool:
         if self._property_factory:
-            return self._property_factory.named_property_setter(self._name, new_value)
+            return self._property_factory.named_property_setter(
+                self._name, new_value
+            )
         return False
 
 
