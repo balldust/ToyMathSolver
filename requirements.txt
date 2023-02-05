@@ -5,10 +5,10 @@ isort==5.10.1
 lazy-object-proxy==1.6.0
 mccabe==0.6.1
 mock==4.0.3
-numpy==1.21.4
+numpy==1.24.2
 pandas==1.5.2
 parameterized==0.8.1
-Pillow==8.4.0
+Pillow==9.4.0
 platformdirs==2.4.0
 PyQt5==5.15.6
 PyQt5-Qt5==5.15.2
@@ -16,7 +16,6 @@ PyQt5-sip==12.9.0
 PyQt5-stubs==5.15.2.0
 python-dateutil==2.8.2
 pytz==2022.7
-QuantLib==1.24
 six==1.16.0
 toml==0.10.2
 wrapt==1.13.3
