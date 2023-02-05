@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Optional
 
 from src.util.factories.property_factory import PropertyFactory
 
 
 class TreeItem:
-    def __init__(self, name: str, property_factory: PropertyFactory):
+    def __init__(self, name: str, property_factory: Optional[PropertyFactory]):
         self._name = name
         self._property_factory = property_factory
 

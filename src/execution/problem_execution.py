@@ -1,3 +1,5 @@
+from typing import List
+
 from antlr4 import *
 from src.antlr.CalcLexer import CalcLexer
 from src.antlr.CalcParser import CalcParser
@@ -49,7 +51,7 @@ class ProblemExecution:
                 new_equation_system.set_variable_value(var.name, var.value)
         self._equation_system = new_equation_system
 
-    def get_errors(self) -> list[EquationSyntaxError]:
+    def get_errors(self) -> List[EquationSyntaxError]:
         return self._error_reporter.errors
 
     def solve_system(self) -> bool:
@@ -61,7 +63,7 @@ class ProblemExecution:
             return solver.solve()
         return False
 
-    def get_calculated_variables(self) -> list[CalculatedVariable]:
+    def get_calculated_variables(self) -> List[CalculatedVariable]:
         return self._equation_system.calculated_variables()
 
     def set_variable_initial_value(self, var_name: str, value: float):

@@ -1,3 +1,5 @@
+from typing import Set, List
+
 from src.equationhandling.equation_variable import (
     EquationVariable,
     CalculatedVariable,
@@ -36,7 +38,7 @@ class VariablesCollection:
             if var.name.lower() == name.lower():
                 return var.value
 
-    def calculated_variables(self) -> list[CalculatedVariable]:
+    def calculated_variables(self) -> List[CalculatedVariable]:
         calculated_vars = []
         for var in self._variables:
             if isinstance(var, CalculatedVariable):
@@ -44,5 +46,5 @@ class VariablesCollection:
         return calculated_vars
 
     @property
-    def variables(self) -> set[EquationVariable]:
+    def variables(self) -> Set[EquationVariable]:
         return self._variables

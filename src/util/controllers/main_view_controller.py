@@ -1,3 +1,5 @@
+from typing import List
+
 from src.equationhandling.equation_variable import CalculatedVariable
 from src.equationinterpreter.error_handling.syntax_error import (
     EquationSyntaxError,
@@ -11,8 +13,8 @@ from src.util.listeners.variable_listeners import CalculatedVariableObserver
 class MainViewController(TextListener):
     def __init__(self, model: ProblemExecution):
         self._model = model
-        self._error_listeners: list[SyntaxErrorListener] = []
-        self._calculated_variable_listeners: list[
+        self._error_listeners: List[SyntaxErrorListener] = []
+        self._calculated_variable_listeners: List[
             CalculatedVariableObserver
         ] = []
 
@@ -30,7 +32,7 @@ class MainViewController(TextListener):
     def add_view_variable_listeners(self, listener: CalculatedVariableObserver):
         self._calculated_variable_listeners.append(listener)
 
-    def get_calculated_variables(self) -> list[CalculatedVariable]:
+    def get_calculated_variables(self) -> List[CalculatedVariable]:
         calculated_vars = self._model.get_calculated_variables().copy()
         calculated_vars.sort(key=lambda var: var.name)
         return calculated_vars
@@ -43,7 +45,7 @@ class MainViewController(TextListener):
             if system_solved:
                 self._notify_variable_listeners()
 
-    def _notify_syntax_error_listeners(self, errors: list[EquationSyntaxError]):
+    def _notify_syntax_error_listeners(self, errors: List[EquationSyntaxError]):
         for listener in self._error_listeners:
             listener.handle_errors(errors)
 
