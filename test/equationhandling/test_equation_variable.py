@@ -14,8 +14,7 @@ class TestEquationVariable(TestCase):
         with self.assertRaises(TypeError):
             TestEquationVariable(None)
 
-    @parameterized.parameterized.expand(
-        [["a", "a"], ["a", "A"]])
+    @parameterized.parameterized.expand([["a", "a"], ["a", "A"]])
     def test_equals(self, name_1, name_2):
         variable_one = TestEquationVariableImpl(name_1)
         variable_two = TestEquationVariableImpl(name_2)

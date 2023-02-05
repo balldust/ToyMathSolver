@@ -2,11 +2,11 @@
 from antlr4 import *
 from io import StringIO
 import sys
+
 if sys.version_info[1] > 5:
     from typing import TextIO
 else:
     from typing.io import TextIO
-
 
 
 def serializedATN():
@@ -25,17 +25,17 @@ def serializedATN():
         buf.write("\23\3\24\5\24u\n\24\3\24\3\24\3\24\3\24\3\25\6\25|\n\25")
         buf.write("\r\25\16\25}\3\25\3\25\3\26\3\26\3\27\3\27\3\27\2\2\30")
         buf.write("\3\3\5\4\7\5\t\6\13\7\r\b\17\t\21\n\23\13\25\f\27\r\31")
-        buf.write("\16\33\17\35\20\37\21!\22#\23%\24\'\25)\26+\27-\30\3\2")
-        buf.write("\6\4\2C\\c|\3\2\62;\5\2\f\f\17\17$$\4\2\13\13\"\"\2\u008e")
+        buf.write("\16\33\17\35\20\37\21!\22#\23%\24'\25)\26+\27-\30\3\2")
+        buf.write('\6\4\2C\\c|\3\2\62;\5\2\f\f\17\17$$\4\2\13\13""\2\u008e')
         buf.write("\2\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3\2\2\2\2\13")
         buf.write("\3\2\2\2\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3")
         buf.write("\2\2\2\2\25\3\2\2\2\2\27\3\2\2\2\2\31\3\2\2\2\2\33\3\2")
         buf.write("\2\2\2\35\3\2\2\2\2\37\3\2\2\2\2!\3\2\2\2\2#\3\2\2\2\2")
-        buf.write("%\3\2\2\2\2\'\3\2\2\2\2)\3\2\2\2\2+\3\2\2\2\2-\3\2\2\2")
+        buf.write("%\3\2\2\2\2'\3\2\2\2\2)\3\2\2\2\2+\3\2\2\2\2-\3\2\2\2")
         buf.write("\3/\3\2\2\2\5\61\3\2\2\2\7\63\3\2\2\2\t\65\3\2\2\2\13")
         buf.write("\67\3\2\2\2\r9\3\2\2\2\17<\3\2\2\2\21?\3\2\2\2\23B\3\2")
         buf.write("\2\2\25D\3\2\2\2\27F\3\2\2\2\31H\3\2\2\2\33J\3\2\2\2\35")
-        buf.write("L\3\2\2\2\37P\3\2\2\2!\\\3\2\2\2#h\3\2\2\2%q\3\2\2\2\'")
+        buf.write("L\3\2\2\2\37P\3\2\2\2!\\\3\2\2\2#h\3\2\2\2%q\3\2\2\2'")
         buf.write("t\3\2\2\2){\3\2\2\2+\u0081\3\2\2\2-\u0083\3\2\2\2/\60")
         buf.write("\7`\2\2\60\4\3\2\2\2\61\62\7,\2\2\62\6\3\2\2\2\63\64\7")
         buf.write("\61\2\2\64\b\3\2\2\2\65\66\7-\2\2\66\n\3\2\2\2\678\7/")
@@ -49,7 +49,7 @@ def serializedATN():
         buf.write("Z\3\2\2\2Z \3\2\2\2[]\t\3\2\2\\[\3\2\2\2]^\3\2\2\2^\\")
         buf.write("\3\2\2\2^_\3\2\2\2_f\3\2\2\2`b\7\60\2\2ac\t\3\2\2ba\3")
         buf.write("\2\2\2cd\3\2\2\2db\3\2\2\2de\3\2\2\2eg\3\2\2\2f`\3\2\2")
-        buf.write("\2fg\3\2\2\2g\"\3\2\2\2hl\7$\2\2ik\n\4\2\2ji\3\2\2\2k")
+        buf.write('\2fg\3\2\2\2g"\3\2\2\2hl\7$\2\2ik\n\4\2\2ji\3\2\2\2k')
         buf.write("n\3\2\2\2lj\3\2\2\2lm\3\2\2\2mo\3\2\2\2nl\3\2\2\2op\7")
         buf.write("$\2\2p$\3\2\2\2qr\7&\2\2r&\3\2\2\2su\7\17\2\2ts\3\2\2")
         buf.write("\2tu\3\2\2\2uv\3\2\2\2vw\7\f\2\2wx\3\2\2\2xy\b\24\2\2")
@@ -65,7 +65,7 @@ class CalcLexer(Lexer):
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
-    decisionsToDFA = [ DFA(ds, i) for i, ds in enumerate(atn.decisionToState) ]
+    decisionsToDFA = [DFA(ds, i) for i, ds in enumerate(atn.decisionToState)]
 
     POW = 1
     MUL = 2
@@ -90,31 +90,89 @@ class CalcLexer(Lexer):
     SEMICOLON = 21
     ASSIGN = 22
 
-    channelNames = [ u"DEFAULT_TOKEN_CHANNEL", u"HIDDEN" ]
+    channelNames = ["DEFAULT_TOKEN_CHANNEL", "HIDDEN"]
 
-    modeNames = [ "DEFAULT_MODE" ]
+    modeNames = ["DEFAULT_MODE"]
 
-    literalNames = [ "<INVALID>",
-            "'^'", "'*'", "'/'", "'+'", "'-'", "'!='", "'>='", "'<='", "'>'", 
-            "'<'", "'='", "'('", "')'", "'//'", "'$'", "';'", "':='" ]
+    literalNames = [
+        "<INVALID>",
+        "'^'",
+        "'*'",
+        "'/'",
+        "'+'",
+        "'-'",
+        "'!='",
+        "'>='",
+        "'<='",
+        "'>'",
+        "'<'",
+        "'='",
+        "'('",
+        "')'",
+        "'//'",
+        "'$'",
+        "';'",
+        "':='",
+    ]
 
-    symbolicNames = [ "<INVALID>",
-            "POW", "MUL", "DIV", "ADD", "SUB", "NEQ", "GE", "LE", "GT", 
-            "LT", "EQ", "LPAREN", "RPAREN", "DOUBLESLASH", "ID", "NUMBER", 
-            "STRINGLITERAL", "DOLLAR", "NEWLINE", "WS", "SEMICOLON", "ASSIGN" ]
+    symbolicNames = [
+        "<INVALID>",
+        "POW",
+        "MUL",
+        "DIV",
+        "ADD",
+        "SUB",
+        "NEQ",
+        "GE",
+        "LE",
+        "GT",
+        "LT",
+        "EQ",
+        "LPAREN",
+        "RPAREN",
+        "DOUBLESLASH",
+        "ID",
+        "NUMBER",
+        "STRINGLITERAL",
+        "DOLLAR",
+        "NEWLINE",
+        "WS",
+        "SEMICOLON",
+        "ASSIGN",
+    ]
 
-    ruleNames = [ "POW", "MUL", "DIV", "ADD", "SUB", "NEQ", "GE", "LE", 
-                  "GT", "LT", "EQ", "LPAREN", "RPAREN", "DOUBLESLASH", "ID", 
-                  "NUMBER", "STRINGLITERAL", "DOLLAR", "NEWLINE", "WS", 
-                  "SEMICOLON", "ASSIGN" ]
+    ruleNames = [
+        "POW",
+        "MUL",
+        "DIV",
+        "ADD",
+        "SUB",
+        "NEQ",
+        "GE",
+        "LE",
+        "GT",
+        "LT",
+        "EQ",
+        "LPAREN",
+        "RPAREN",
+        "DOUBLESLASH",
+        "ID",
+        "NUMBER",
+        "STRINGLITERAL",
+        "DOLLAR",
+        "NEWLINE",
+        "WS",
+        "SEMICOLON",
+        "ASSIGN",
+    ]
 
     grammarFileName = "Calc.g4"
 
-    def __init__(self, input=None, output:TextIO = sys.stdout):
+    def __init__(self, input=None, output: TextIO = sys.stdout):
         super().__init__(input, output)
         self.checkVersion("4.9.2")
-        self._interp = LexerATNSimulator(self, self.atn, self.decisionsToDFA, PredictionContextCache())
+        self._interp = LexerATNSimulator(
+            self, self.atn, self.decisionsToDFA, PredictionContextCache()
+        )
         self._actions = None
         self._predicates = None
-
-

@@ -29,7 +29,7 @@ class VariablesTableModel(QtCore.QAbstractTableModel):
     def __init__(self, controller: MainViewController):
         super(VariablesTableModel, self).__init__()
         self._controller = controller
-        self._horizontal_headers = ['Initial value', 'Final value']
+        self._horizontal_headers = ["Initial value", "Final value"]
 
     def headerData(self, section, orientation, role=QtCore.Qt.DisplayRole):
         if role != QtCore.Qt.DisplayRole:
@@ -43,7 +43,9 @@ class VariablesTableModel(QtCore.QAbstractTableModel):
         elif orientation == QtCore.Qt.Vertical:
             try:
                 if self._controller:
-                    return self._controller.get_calculated_variables()[section].name
+                    return self._controller.get_calculated_variables()[
+                        section
+                    ].name
                 else:
                     return QtCore.QVariant()
             except (IndexError,):
@@ -51,7 +53,11 @@ class VariablesTableModel(QtCore.QAbstractTableModel):
 
     def flags(self, index):
         if index.column() == 0:
-            return QtCore.Qt.ItemIsEditable | QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled
+            return (
+                QtCore.Qt.ItemIsEditable
+                | QtCore.Qt.ItemIsSelectable
+                | QtCore.Qt.ItemIsEnabled
+            )
         else:
             return QtCore.Qt.ItemIsSelectable
 
@@ -76,7 +82,9 @@ class VariablesTableModel(QtCore.QAbstractTableModel):
         if index.isValid():
             if isinstance(value, str) and value.isnumeric():
                 var_name = self.headerData(index.row(), QtCore.Qt.Vertical)
-                self._controller.set_variable_initial_value(var_name, float(value))
+                self._controller.set_variable_initial_value(
+                    var_name, float(value)
+                )
                 return True
             else:
                 return False

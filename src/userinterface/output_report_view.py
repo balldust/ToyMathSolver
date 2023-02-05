@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import QPlainTextEdit
 
-from src.equationinterpreter.error_handling.syntax_error import EquationSyntaxError
+from src.equationinterpreter.error_handling.syntax_error import (
+    EquationSyntaxError,
+)
 from src.util.listeners.error_listeners import SyntaxErrorListener
 
 
@@ -13,7 +15,7 @@ class OutputReportView(SyntaxErrorListener):
         error_messages = []
         for error in errors:
             error_messages.append(error.message)
-        self._report_view.setPlainText('\n'.join(error_messages))
+        self._report_view.setPlainText("\n".join(error_messages))
 
     @property
     def report_view(self) -> QPlainTextEdit:

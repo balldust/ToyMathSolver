@@ -1,9 +1,12 @@
 from unittest import TestCase
 
-from src.equationhandling.equation_variable import CalculatedVariable, \
-    AssignedVariable
-from src.equationhandling.equation_variables_collection import \
-    VariablesCollection
+from src.equationhandling.equation_variable import (
+    CalculatedVariable,
+    AssignedVariable,
+)
+from src.equationhandling.equation_variables_collection import (
+    VariablesCollection,
+)
 
 
 class TestVariablesCollection(TestCase):
@@ -25,7 +28,9 @@ class TestVariablesCollection(TestCase):
 
         self.assertEqual(len(variables._variables), 1)
 
-    def test_add_variable_given_existing_variable_with_same_name_different_case(self):
+    def test_add_variable_given_existing_variable_with_same_name_different_case(
+        self,
+    ):
         variables = VariablesCollection()
         var_to_add = CalculatedVariable("x")
         var_to_add_same_name = CalculatedVariable("X")

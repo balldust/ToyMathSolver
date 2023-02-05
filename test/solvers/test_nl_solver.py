@@ -17,7 +17,8 @@ class Test(TestCase):
         equation_system.add_term_to_last_equation("2")
         equation_system.add_term_to_last_equation("4")
         nl_solver = NonLinearEquationSolver(
-            equation_system, NonLinearSolverSpecifications())
+            equation_system, NonLinearSolverSpecifications()
+        )
 
         nl_solver.solve()
 

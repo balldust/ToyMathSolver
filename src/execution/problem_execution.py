@@ -1,11 +1,17 @@
+from typing import List
+
 from antlr4 import *
 from src.antlr.CalcLexer import CalcLexer
 from src.antlr.CalcParser import CalcParser
 from src.equationhandling.equation_variable import CalculatedVariable
 from src.equationinterpreter.equation_builder import EquationBuilder
 from src.equationhandling.equation_system import EquationSystem
-from src.equationinterpreter.error_handling.syntax_error import EquationSyntaxError
-from src.equationinterpreter.error_handling.syntax_error_report import SyntaxErrorReporter
+from src.equationinterpreter.error_handling.syntax_error import (
+    EquationSyntaxError,
+)
+from src.equationinterpreter.error_handling.syntax_error_report import (
+    SyntaxErrorReporter,
+)
 from src.solvers.nl_solver import NonLinearEquationSolver
 from src.solvers.nl_solver_specification import NonLinearSolverSpecifications
 
@@ -34,24 +40,30 @@ class ProblemExecution:
             return True
         return False
 
-    def _calculate_new_equation_system(self, new_equation_system: EquationSystem):
+    def _calculate_new_equation_system(
+        self, new_equation_system: EquationSystem
+    ):
         for var in self._equation_system.calculated_variables():
             if new_equation_system.has_variable(var.name):
-                new_equation_system.set_variable_initial_value(var.name, var.initial_value)
+                new_equation_system.set_variable_initial_value(
+                    var.name, var.initial_value
+                )
                 new_equation_system.set_variable_value(var.name, var.value)
         self._equation_system = new_equation_system
 
-    def get_errors(self) -> list[EquationSyntaxError]:
+    def get_errors(self) -> List[EquationSyntaxError]:
         return self._error_reporter.errors
 
     def solve_system(self) -> bool:
         if self._equation_system.no_structural_errors():
             self._equation_system.initialize_calculated_variables()
-            solver = NonLinearEquationSolver(self._equation_system, self._nl_solver_specs)
+            solver = NonLinearEquationSolver(
+                self._equation_system, self._nl_solver_specs
+            )
             return solver.solve()
         return False
 
-    def get_calculated_variables(self) -> list[CalculatedVariable]:
+    def get_calculated_variables(self) -> List[CalculatedVariable]:
         return self._equation_system.calculated_variables()
 
     def set_variable_initial_value(self, var_name: str, value: float):
@@ -63,5 +75,3 @@ class ProblemExecution:
     @property
     def nl_solver_specs(self) -> NonLinearSolverSpecifications:
         return self._nl_solver_specs
-
-

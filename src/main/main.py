@@ -6,6 +6,5 @@ def main():
     app.show_window()
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

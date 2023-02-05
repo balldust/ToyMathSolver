@@ -78,6 +78,8 @@ class AssignedVariable(EquationVariable):
     @value.setter
     def value(self, value: float):
         if self._value:
-            raise Exception("Cannot change value when value has already been assigned")
+            raise Exception(
+                "Cannot change value when value has already been assigned"
+            )
         else:
             self._value = value

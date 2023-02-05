@@ -24,9 +24,11 @@ class EquationBuilder(ParseTreeListener):
 
     def enterAssignment(self, ctx):
         self._in_assignment = True
-        variable_name = ctx._children[0].getText()
-        variable_value = ctx._children[2].getText()
-        self._equation_system.add_assigned_variable(variable_name, float(variable_value))
+        variable_name = ctx.children[0].getText()
+        variable_value = ctx.children[2].getText()
+        self._equation_system.add_assigned_variable(
+            variable_name, float(variable_value)
+        )
 
     def exitAssignment(self, ctx):
         self._in_assignment = False
@@ -38,7 +40,9 @@ class EquationBuilder(ParseTreeListener):
         self._in_comment = False
 
     def enterArithmeticExpressionPow(self, ctx):
-        self._equation_system.add_term_to_last_equation(ctx._children[1].getText())
+        self._equation_system.add_term_to_last_equation(
+            ctx.children[1].getText()
+        )
 
     def exitArithmeticExpressionPow(self, ctx):
         pass
@@ -56,13 +60,17 @@ class EquationBuilder(ParseTreeListener):
         pass
 
     def enterArithmeticExpressionMultDiv(self, ctx):
-        self._equation_system.add_term_to_last_equation(ctx._children[1].getText())
+        self._equation_system.add_term_to_last_equation(
+            ctx.children[1].getText()
+        )
 
     def exitArithmeticExpressionMultDiv(self, ctx):
         pass
 
     def enterArithmeticExpressionPlusMinus(self, ctx):
-        self._equation_system.add_term_to_last_equation(ctx._children[1].getText())
+        self._equation_system.add_term_to_last_equation(
+            ctx.children[1].getText()
+        )
 
     def exitArithmeticExpressionPlusMinus(self, ctx):
         pass
@@ -78,7 +86,9 @@ class EquationBuilder(ParseTreeListener):
         if not self._in_assignment and not self._in_comment:
             variable_of_equation = ctx.getText()
             self._equation_system.add_calculated_variable(variable_of_equation)
-            self._equation_system.add_term_to_last_equation(variable_of_equation)
+            self._equation_system.add_term_to_last_equation(
+                variable_of_equation
+            )
 
     def exitNumericVariable(self, ctx):
         pass
